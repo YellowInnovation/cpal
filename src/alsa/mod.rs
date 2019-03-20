@@ -82,6 +82,7 @@ impl Device {
         let mut handle = mem::uninitialized();
         let device_name = ffi::CString::new(&self.0[..]).expect("Unable to get device name");
 
+        println!("device name : {:?}", device_name);
         match alsa::snd_pcm_open(
             &mut handle,
             device_name.as_ptr() as *const _,
