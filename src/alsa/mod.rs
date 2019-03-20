@@ -257,6 +257,7 @@ impl Device {
             }
         };
 
+        println("{?}", formats);
         formats.sort_by(|a, b| a.cmp_default_heuristics(b));
 
         match formats.into_iter().last() {
