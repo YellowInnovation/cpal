@@ -679,6 +679,7 @@ fn default_device(data_flow: EDataFlow) -> Option<Device> {
         if let Err(_err) = check_result(hres) {
             return None; // TODO: check specifically for `E_NOTFOUND`, and panic otherwise
         }
+        println!("device name : {}", device.name());
         Some(Device::from_immdevice(device))
     }
 }
