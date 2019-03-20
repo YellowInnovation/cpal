@@ -676,10 +676,10 @@ fn default_device(data_flow: EDataFlow) -> Option<Device> {
     unsafe {
         let mut device = mem::uninitialized();
         let hres = (*ENUMERATOR.0).GetDefaultAudioEndpoint(data_flow, eConsole, &mut device);
+        println!("device name : {}", device.name());
         if let Err(_err) = check_result(hres) {
             return None; // TODO: check specifically for `E_NOTFOUND`, and panic otherwise
         }
-        println!("device name : {}", device.name());
         Some(Device::from_immdevice(device))
     }
 }
