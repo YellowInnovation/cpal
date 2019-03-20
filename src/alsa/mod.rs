@@ -82,7 +82,6 @@ impl Device {
         let mut handle = mem::uninitialized();
         let device_name = ffi::CString::new(&self.0[..]).expect("Unable to get device name");
 
-        println!("device name : {:?}", device_name);
         match alsa::snd_pcm_open(
             &mut handle,
             device_name.as_ptr() as *const _,
@@ -258,7 +257,6 @@ impl Device {
             }
         };
 
-        println!("{:?}\n", formats);
         formats.sort_by(|a, b| a.cmp_default_heuristics(b));
 
         match formats.into_iter().last() {
