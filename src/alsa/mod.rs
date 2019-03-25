@@ -80,11 +80,14 @@ impl Device {
         stream_t: alsa::snd_pcm_stream_t,
     ) -> Result<VecIntoIter<SupportedFormat>, FormatsEnumerationError> {
         let mut handle = mem::uninitialized();
-        let device_name = ffi::CString::new(&self.0[..]).expect("Unable to get device name");
+        //let device_name = ffi::CString::new(&self.0[..]).expect("Unable to get device name");
+        //let device_name = "plug:dmixer";
+        let name = ffi::CString::new("plug:dmixer").expect("CString::new failed");
+
 
         match alsa::snd_pcm_open(
             &mut handle,
-            device_name.as_ptr() as *const _,
+            name.as_ptr() as *const _,
             stream_t,
             alsa::SND_PCM_NONBLOCK,
         ) {
@@ -690,7 +693,8 @@ impl EventLoop {
         format: &Format,
     ) -> Result<StreamId, CreationError> {
         unsafe {
-            let name = ffi::CString::new(device.0.clone()).expect("unable to clone device");
+            //let name = ffi::CString::new(device.0.clone()).expect("unable to clone device");
+            let name = ffi::CString::new("plug:dmixer").expect("CString::new failed");
 
             let mut playback_handle = mem::uninitialized();
             match alsa::snd_pcm_open(
