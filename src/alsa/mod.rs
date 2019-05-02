@@ -812,9 +812,7 @@ unsafe fn set_hw_params_from_format(
     .expect("channel count could not be set");
     let mut max_buffer_size = format.sample_rate.0 as alsa::snd_pcm_uframes_t
         / format.channels as alsa::snd_pcm_uframes_t
-        / 4; // 250ms of buffer
-
-    println!("{:#?}", max_buffer_size);
+        / 3; // 333ms of buffer
 
     check_errors(alsa::snd_pcm_hw_params_set_buffer_size_max(
         pcm_handle,
